@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import StepIndicator from './components/StepIndicator.jsx';
 import ErrorScreen from './components/ErrorScreen.jsx';
 import StepScanPost from './components/steps/StepScanPost.jsx';
@@ -35,6 +36,12 @@ function loadSessionState() {
     return null;
   }
 }
+
+const pageVariants = {
+  enter: { opacity: 0, y: 24 },
+  center: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -16 },
+};
 
 export default function App() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -124,6 +131,7 @@ export default function App() {
     onStartOver: handleStartOver,
   };
 
+  let stepKey = appError ? 'error' : String(currentStep);
   let stepContent = null;
 
   if (appError) {
@@ -134,14 +142,12 @@ export default function App() {
         postUrl={postUrl}
       />
     );
+  } else if (currentStep === 1) {
+    stepContent = <StepScanPost {...sharedStepProps} />;
+  } else if (currentStep === 2) {
+    stepContent = <StepFindAttendance {...sharedStepProps} />;
   } else {
-    if (currentStep === 1) {
-      stepContent = <StepScanPost {...sharedStepProps} />;
-    } else if (currentStep === 2) {
-      stepContent = <StepFindAttendance {...sharedStepProps} />;
-    } else {
-      stepContent = <StepDetermineWinner {...sharedStepProps} />;
-    }
+    stepContent = <StepDetermineWinner {...sharedStepProps} />;
   }
 
   return (
@@ -157,7 +163,7 @@ export default function App() {
                 Giveaway Helper
               </div>
               <div className="text-xs text-gray-300">
-                Free Instagram Comment Picker
+                Instagram Comment Picker
               </div>
             </div>
           </div>
@@ -166,9 +172,22 @@ export default function App() {
 
       <main className="mx-auto max-w-5xl px-4 py-8">
         <StepIndicator currentStep={currentStep} />
-        <div className="mt-6">{stepContent}</div>
+
+        <div className="mt-6">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={stepKey}
+              variants={pageVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.35, ease: 'easeOut' }}
+            >
+              {stepContent}
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </main>
     </div>
   );
 }
-

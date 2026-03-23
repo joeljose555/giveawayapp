@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import {
   filterByMinMentions,
   pickRandomWinners,
@@ -11,7 +12,6 @@ const STORAGE_KEYS = {
 
 export default function StepFindAttendance({
   comments,
-  scrapeMethod,
   setWinners,
   setCurrentStep,
 }) {
@@ -42,18 +42,8 @@ export default function StepFindAttendance({
     setCurrentStep(3);
   };
 
-  const methodBadge =
-    scrapeMethod === 'cors_proxy'
-      ? '🌐 Scraped via CORS Proxy'
-      : '🤖 Scraped via Browser Automation';
-
-  const methodClass =
-    scrapeMethod === 'cors_proxy'
-      ? 'bg-warning-amber/10 text-warning-amber'
-      : 'bg-primary/10 text-primary';
-
   return (
-    <div className="fade-slide-enter fade-slide-enter-active grid gap-6 rounded-2xl bg-card-white p-6 shadow-sm sm:grid-cols-2">
+    <div className="grid gap-6 rounded-2xl bg-card-white p-6 shadow-sm sm:grid-cols-2">
       <div className="flex flex-col justify-between">
         <div>
           <h2 className="text-lg font-semibold text-text-primary">
@@ -65,9 +55,14 @@ export default function StepFindAttendance({
           </p>
         </div>
 
-        <div className="mt-6 rounded-2xl border border-border-grey bg-page-bg px-4 py-5">
+        <motion.div
+          className="mt-6 rounded-2xl border border-border-grey bg-page-bg px-4 py-5"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.15, duration: 0.3 }}
+        >
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary text-lg">
               💬
             </div>
             <div>
@@ -79,31 +74,29 @@ export default function StepFindAttendance({
               </p>
             </div>
           </div>
-          <span
-            className={`mt-4 inline-flex rounded-full px-3 py-1 text-xs font-medium ${methodClass}`}
-          >
-            {methodBadge}
+          <span className="mt-4 inline-flex rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+            Comments loaded
           </span>
-        </div>
+        </motion.div>
       </div>
 
       <div className="space-y-4">
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-text-secondary">
-            Number of Minimum Mention
+            Minimum Mentions Required
           </label>
           <input
             type="number"
             min={0}
             value={minMentions}
             onChange={(e) => setMinMentions(Number(e.target.value) || 0)}
-            className="mt-1 w-full rounded-xl border border-border-grey px-3 py-2 text-sm outline-none ring-primary/30 focus:ring-2"
+            className="mt-1 w-full rounded-xl border border-border-grey px-3 py-2 text-sm outline-none ring-primary/30 transition-shadow duration-200 focus:ring-2 focus:shadow-sm"
           />
         </div>
 
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-text-secondary">
-            Number of Winner
+            Number of Winners
           </label>
           <input
             type="number"
@@ -118,7 +111,7 @@ export default function StepFindAttendance({
                 )
               )
             }
-            className="mt-1 w-full rounded-xl border border-border-grey px-3 py-2 text-sm outline-none ring-primary/30 focus:ring-2"
+            className="mt-1 w-full rounded-xl border border-border-grey px-3 py-2 text-sm outline-none ring-primary/30 transition-shadow duration-200 focus:ring-2 focus:shadow-sm"
           />
           <p className="mt-1 text-xs text-text-secondary">
             You can pick up to {totalComments || 1} winners based on the
@@ -130,7 +123,7 @@ export default function StepFindAttendance({
           type="button"
           onClick={handleDetermine}
           disabled={!totalComments}
-          className="mt-2 inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white shadow-sm transition-transform duration-150 hover:scale-[1.02] hover:bg-[#00A87A] disabled:cursor-not-allowed disabled:opacity-70"
+          className="mt-2 inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-150 hover:scale-[1.02] hover:bg-[#00A87A] hover:shadow-md disabled:cursor-not-allowed disabled:opacity-70"
         >
           Determine Winner
         </button>
@@ -138,4 +131,3 @@ export default function StepFindAttendance({
     </div>
   );
 }
-

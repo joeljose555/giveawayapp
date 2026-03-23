@@ -11,7 +11,7 @@ export default function ErrorScreen({ error, onTryAgain, postUrl }) {
         </div>
         <div>
           <h2 className="text-lg font-semibold text-error-red">
-            Unable to Fetch Comments
+            Something Went Wrong
           </h2>
           {error?.type && (
             <p className="text-xs font-medium uppercase tracking-wide text-error-red/80">
@@ -23,7 +23,7 @@ export default function ErrorScreen({ error, onTryAgain, postUrl }) {
 
       <p className="text-sm text-text-primary">
         {error?.message ||
-          'Something went wrong while trying to load comments for this Instagram post.'}
+          'Something went wrong while running the comment picker demo.'}
       </p>
 
       {postUrl && (
