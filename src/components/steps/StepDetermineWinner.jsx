@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import WinnerCard from '../WinnerCard.jsx';
 import LoadingBar from '../LoadingBar.jsx';
-import InstagramEmbed from '../InstagramEmbed.jsx';
+import GiveawayPostImage from '../GiveawayPostImage.jsx';
 import { pickRandomWinners } from '../../utils/commentParser.js';
 
 const STORAGE_KEYS = {
@@ -33,11 +33,11 @@ function fireConfetti() {
 }
 
 export default function StepDetermineWinner({
-  postUrl,
   comments,
   winners,
   setWinners,
   onStartOver,
+  giveawayPostImageUrl,
 }) {
   const [showLoading, setShowLoading] = useState(true);
 
@@ -122,17 +122,15 @@ export default function StepDetermineWinner({
         </div>
       </div>
 
-      {/* Instagram embed column */}
-      {postUrl && (
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3, duration: 0.4 }}
-          className="self-start"
-        >
-          <InstagramEmbed url={postUrl} />
-        </motion.div>
-      )}
+      {/* Static post preview (image URL from env, prop, or GiveawayPostImage fallback) */}
+      <motion.div
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.3, duration: 0.4 }}
+        className="self-start"
+      >
+        <GiveawayPostImage imageUrl={giveawayPostImageUrl} />
+      </motion.div>
     </div>
   );
 }

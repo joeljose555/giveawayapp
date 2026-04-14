@@ -5,6 +5,7 @@ import ErrorScreen from './components/ErrorScreen.jsx';
 import StepScanPost from './components/steps/StepScanPost.jsx';
 import StepFindAttendance from './components/steps/StepFindAttendance.jsx';
 import StepDetermineWinner from './components/steps/StepDetermineWinner.jsx';
+import LoginPage from './components/LoginPage.jsx';
 
 const STORAGE_KEYS = {
   url: 'igCommentPicker_url',
@@ -12,6 +13,7 @@ const STORAGE_KEYS = {
   comments: 'igCommentPicker_comments',
   winners: 'igCommentPicker_winners',
   step: 'igCommentPicker_step',
+  auth: 'igCommentPicker_auth',
 };
 
 function loadSessionState() {
@@ -24,6 +26,7 @@ function loadSessionState() {
       window.sessionStorage.getItem(STORAGE_KEYS.comments) || '[]';
     const winnersRaw =
       window.sessionStorage.getItem(STORAGE_KEYS.winners) || '[]';
+    const authRaw = window.sessionStorage.getItem(STORAGE_KEYS.auth);
 
     return {
       step: step ? Number(step) : 1,
@@ -31,6 +34,7 @@ function loadSessionState() {
       method,
       comments: JSON.parse(commentsRaw || '[]'),
       winners: JSON.parse(winnersRaw || '[]'),
+      user: authRaw ? JSON.parse(authRaw) : null,
     };
   } catch {
     return null;
@@ -50,6 +54,8 @@ export default function App() {
   const [comments, setComments] = useState([]);
   const [scrapeMethod, setScrapeMethod] = useState(null);
   const [winners, setWinners] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
   useEffect(() => {
     const restored = loadSessionState();
@@ -59,6 +65,10 @@ export default function App() {
       setScrapeMethod(restored.method || null);
       setComments(restored.comments || []);
       setWinners(restored.winners || []);
+      if (restored.user) {
+        setLoggedInUser(restored.user);
+        setIsLoggedIn(true);
+      }
     }
   }, []);
 
@@ -95,6 +105,32 @@ export default function App() {
     window.sessionStorage.setItem(STORAGE_KEYS.step, String(currentStep));
   }, [currentStep]);
 
+  const handleLogin = (user) => {
+    setLoggedInUser(user);
+    setIsLoggedIn(true);
+    if (typeof window !== 'undefined') {
+      // Store without password for safety
+      const { password: _omit, ...safeUser } = user;
+      window.sessionStorage.setItem(STORAGE_KEYS.auth, JSON.stringify(safeUser));
+    }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setLoggedInUser(null);
+    setAppError(null);
+    setCurrentStep(1);
+    setPostUrl('');
+    setComments([]);
+    setScrapeMethod(null);
+    setWinners([]);
+    if (typeof window !== 'undefined') {
+      Object.values(STORAGE_KEYS).forEach((key) =>
+        window.sessionStorage.removeItem(key)
+      );
+    }
+  };
+
   const handleResetError = () => {
     setAppError(null);
     setCurrentStep(1);
@@ -109,11 +145,15 @@ export default function App() {
     setWinners([]);
 
     if (typeof window !== 'undefined') {
-      Object.values(STORAGE_KEYS).forEach((key) =>
-        window.sessionStorage.removeItem(key)
-      );
+      Object.values(STORAGE_KEYS)
+        .filter((key) => key !== STORAGE_KEYS.auth)
+        .forEach((key) => window.sessionStorage.removeItem(key));
     }
   };
+
+  if (!isLoggedIn) {
+    return <LoginPage onLogin={handleLogin} />;
+  }
 
   const sharedStepProps = {
     postUrl,
@@ -166,6 +206,30 @@ export default function App() {
                 Instagram Comment Picker
               </div>
             </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            {loggedInUser?.avatarUrl ? (
+              <img
+                src={loggedInUser.avatarUrl}
+                alt={loggedInUser.name}
+                className="h-8 w-8 rounded-full object-cover"
+              />
+            ) : (
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 text-xs font-bold text-white">
+                {loggedInUser?.initials}
+              </div>
+            )}
+            <span className="hidden text-sm font-medium text-white sm:block">
+              {loggedInUser?.name}
+            </span>
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="rounded-full border border-white/30 px-3 py-1.5 text-xs font-medium text-white/80 transition hover:border-white/60 hover:text-white"
+            >
+              Logout
+            </button>
           </div>
         </div>
       </header>
