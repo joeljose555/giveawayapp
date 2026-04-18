@@ -1,8 +1,8 @@
 {
-  "name": "giveawayapp",
+  "name": "swiftwin",
   "version": "1.0.0",
   "private": true,
-  "description": "Free Instagram Comment Picker and Giveaways Tool",
+  "description": "SwiftWin — Instagram comment picker and giveaway tool",
   "author": "joel jose",
   "scripts": {
     "dev": "vite",

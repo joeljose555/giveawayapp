@@ -34,12 +34,12 @@ export default function LoginPage({ onLogin }) {
       <header className="bg-dark-navy text-white shadow-sm">
         <div className="mx-auto flex max-w-5xl items-center px-4 py-4">
           <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 text-lg font-bold">
-              IG
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 text-xs font-bold">
+              SW
             </div>
             <div>
               <div className="text-sm font-semibold uppercase tracking-wide text-primary">
-                Giveaway Helper
+                SwiftWin
               </div>
               <div className="text-xs text-gray-300">
                 Instagram Comment Picker
@@ -58,14 +58,14 @@ export default function LoginPage({ onLogin }) {
         >
           <div className="rounded-2xl bg-card-white p-8 shadow-sm">
             <div className="mb-6 text-center">
-              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 text-xl font-bold text-white">
-                IG
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 text-sm font-bold text-white">
+                SW
               </div>
               <h1 className="text-xl font-bold text-text-primary">
                 Welcome back
               </h1>
               <p className="mt-1 text-sm text-text-secondary">
-                Sign in to access the Giveaway Helper
+                Sign in to access SwiftWin
               </p>
             </div>
 

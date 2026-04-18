@@ -6,6 +6,7 @@ import StepScanPost from './components/steps/StepScanPost.jsx';
 import StepFindAttendance from './components/steps/StepFindAttendance.jsx';
 import StepDetermineWinner from './components/steps/StepDetermineWinner.jsx';
 import LoginPage from './components/LoginPage.jsx';
+import { postDetails } from './config/winners.js';
 
 const STORAGE_KEYS = {
   url: 'igCommentPicker_url',
@@ -165,6 +166,8 @@ export default function App() {
     winners,
     setWinners,
     setCurrentStep,
+    loggedInUser,
+    giveawayPostDetails: loggedInUser?.email === 'hijaz5511@gmail.com' ? postDetails : null,
     onError: (error) => {
       setAppError(error);
     },
@@ -195,12 +198,12 @@ export default function App() {
       <header className="bg-dark-navy text-white shadow-sm">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
           <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 text-lg font-bold">
-              IG
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 text-xs font-bold">
+              SW
             </div>
             <div>
               <div className="text-sm font-semibold uppercase tracking-wide text-primary">
-                Giveaway Helper
+                SwiftWin
               </div>
               <div className="text-xs text-gray-300">
                 Instagram Comment Picker

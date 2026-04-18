@@ -1,9 +1,9 @@
 export const USERS = [
   {
-    email: 'admin@example.com',
+    email: 'hijaz5511@gmail.com',
     password: 'password123',
-    name: 'Jordan Rivera',
-    initials: 'JR',
+    name: 'Hijaz',
+    initials: 'HJ',
     avatarUrl: null, // set to a URL string to show an image instead of initials
   },
 ];

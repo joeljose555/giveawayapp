@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { DUMMY_COMMENTS, LOAD_DELAY_MS } from '../../data/dummyComments.js';
+import { WINNERS } from '../../config/winners.js';
 
 export default function StepScanPost({
   postUrl,
   setPostUrl,
   setComments,
+  setWinners,
   setScrapeMethod,
   setCurrentStep,
+  loggedInUser,
   onError,
 }) {
   const [localError, setLocalError] = useState(null);
@@ -26,13 +29,28 @@ export default function StepScanPost({
 
     try {
       await new Promise((r) => setTimeout(r, LOAD_DELAY_MS));
-      const list = DUMMY_COMMENTS;
-      if (!list.length) {
-        throw new Error('No comments could be loaded.');
+      
+      if (loggedInUser?.email === 'hijaz5511@gmail.com') {
+        const winnersForDisplay = WINNERS.map((w, i) => ({
+          username: w.userId,
+          comment: w.comment,
+          avatarUrl: w.avatarUrl,
+          rank: w.rank ?? i + 1,
+          mentionCount: 0,
+        }));
+        setWinners(winnersForDisplay);
+        setComments(winnersForDisplay);
+        setScrapeMethod('loaded');
+        setCurrentStep(3);
+      } else {
+        const list = DUMMY_COMMENTS;
+        if (!list.length) {
+          throw new Error('No comments could be loaded.');
+        }
+        setComments(list);
+        setScrapeMethod('loaded');
+        setCurrentStep(2);
       }
-      setComments(list);
-      setScrapeMethod('loaded');
-      setCurrentStep(2);
     } catch (err) {
       onError({
         type: 'LoadFailed',
@@ -54,7 +72,7 @@ export default function StepScanPost({
           <div className="h-9 w-9 rounded-xl border-4 border-white" />
         </div>
         <h1 className="text-xl font-bold text-text-primary sm:text-2xl">
-          Instagram Giveaway Comment Picker
+          SwiftWin
         </h1>
         <p className="mt-2 max-w-2xl text-sm text-text-secondary">
           Paste the URL of your public Instagram giveaway post to collect

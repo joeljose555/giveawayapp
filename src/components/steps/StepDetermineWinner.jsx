@@ -37,7 +37,7 @@ export default function StepDetermineWinner({
   winners,
   setWinners,
   onStartOver,
-  giveawayPostImageUrl,
+  giveawayPostDetails,
 }) {
   const [showLoading, setShowLoading] = useState(true);
 
@@ -129,7 +129,7 @@ export default function StepDetermineWinner({
         transition={{ delay: 0.3, duration: 0.4 }}
         className="self-start"
       >
-        <GiveawayPostImage imageUrl={giveawayPostImageUrl} />
+        <GiveawayPostImage postDetails={giveawayPostDetails} />
       </motion.div>
     </div>
   );
