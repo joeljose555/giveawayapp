@@ -6,7 +6,6 @@ export default function StepScanPost({
   postUrl,
   setPostUrl,
   setComments,
-  setWinners,
   setScrapeMethod,
   setCurrentStep,
   loggedInUser,
@@ -31,17 +30,16 @@ export default function StepScanPost({
       await new Promise((r) => setTimeout(r, LOAD_DELAY_MS));
       
       if (loggedInUser?.email === 'hijaz5511@gmail.com') {
-        const winnersForDisplay = WINNERS.map((w, i) => ({
+        const commentsForDisplay = WINNERS.map((w, i) => ({
           username: w.userId,
           comment: w.comment,
           avatarUrl: w.avatarUrl,
           rank: w.rank ?? i + 1,
           mentionCount: 0,
         }));
-        setWinners(winnersForDisplay);
-        setComments(winnersForDisplay);
+        setComments(commentsForDisplay);
         setScrapeMethod('loaded');
-        setCurrentStep(3);
+        setCurrentStep(2);
       } else {
         const list = DUMMY_COMMENTS;
         if (!list.length) {
@@ -66,7 +64,7 @@ export default function StepScanPost({
   };
 
   return (
-    <div className="rounded-2xl bg-card-white p-6 shadow-sm">
+    <div className="mb-[200px] mt-[100px] rounded-2xl bg-card-white p-6 shadow-sm">
       <div className="flex flex-col items-center text-center">
         <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500">
           <div className="h-9 w-9 rounded-xl border-4 border-white" />

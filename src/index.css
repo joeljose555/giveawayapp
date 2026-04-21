@@ -2,8 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   @apply bg-page-bg text-text-primary antialiased;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  min-height: 100%;
 }
 
 .striped-loading-bar {

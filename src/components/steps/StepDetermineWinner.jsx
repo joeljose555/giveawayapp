@@ -1,15 +1,74 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import WinnerCard from '../WinnerCard.jsx';
 import LoadingBar from '../LoadingBar.jsx';
 import GiveawayPostImage from '../GiveawayPostImage.jsx';
 import { pickRandomWinners } from '../../utils/commentParser.js';
+import { postDetails } from '../../config/winners.js';
 
 const STORAGE_KEYS = {
   winners: 'igCommentPicker_winners',
   step: 'igCommentPicker_step',
 };
+
+const STATS = [
+  { key: 'likesCount', label: 'Likes', icon: '❤️' },
+  { key: 'commentsCount', label: 'Comments', icon: '💬' },
+  { key: 'repostsCount', label: 'Reposts', icon: '🔁' },
+  { key: 'viewsCount', label: 'Views', icon: '👁️' },
+];
+
+function useCountUp(target, duration = 1400, startDelay = 0) {
+  const [count, setCount] = useState(0);
+  const rafRef = useRef(null);
+
+  useEffect(() => {
+    let startTime = null;
+    const delayId = setTimeout(() => {
+      const step = (timestamp) => {
+        if (!startTime) startTime = timestamp;
+        const elapsed = timestamp - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setCount(Math.round(eased * target));
+        if (progress < 1) {
+          rafRef.current = requestAnimationFrame(step);
+        }
+      };
+      rafRef.current = requestAnimationFrame(step);
+    }, startDelay);
+
+    return () => {
+      clearTimeout(delayId);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [target, duration, startDelay]);
+
+  return count;
+}
+
+function StatCard({ icon, label, target, delay }) {
+  const count = useCountUp(target, 1400, delay);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ delay: delay / 1000, duration: 0.4, ease: 'easeOut' }}
+      className="flex flex-1 flex-col items-center justify-center gap-1 rounded-2xl border border-border-grey bg-page-bg px-4 py-5 min-w-[110px]"
+    >
+      <span className="text-2xl">{icon}</span>
+      <span className="text-xl font-bold text-text-primary tabular-nums">
+        {count.toLocaleString()}
+      </span>
+      <span className="text-xs font-medium uppercase tracking-wide text-text-secondary">
+        {label}
+      </span>
+    </motion.div>
+  );
+}
 
 const containerVariants = {
   hidden: {},
@@ -63,14 +122,41 @@ export default function StepDetermineWinner({
 
   if (showLoading) {
     return (
-      <div className="rounded-2xl bg-card-white p-6 text-center shadow-sm">
-        <h2 className="text-lg font-semibold text-text-primary">
-          Selecting winners&hellip;
-        </h2>
-        <p className="mt-1 text-sm text-text-secondary">
-          Running a fair random draw. Please wait.
-        </p>
-        <LoadingBar duration={2500} onComplete={handleLoadingDone} />
+      <div className="rounded-2xl bg-card-white p-6 shadow-sm">
+        <div className="text-center">
+          <motion.h2
+            className="text-lg font-semibold text-text-primary"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35 }}
+          >
+            Analyzing your giveaway&hellip;
+          </motion.h2>
+          <motion.p
+            className="mt-1 text-sm text-text-secondary"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.35 }}
+          >
+            Counting engagement before picking the lucky winners.
+          </motion.p>
+        </div>
+
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          {STATS.map((stat, i) => (
+            <StatCard
+              key={stat.key}
+              icon={stat.icon}
+              label={stat.label}
+              target={postDetails[stat.key] ?? 0}
+              delay={200 + i * 250}
+            />
+          ))}
+        </div>
+
+        <div className="mt-6">
+          <LoadingBar duration={2500} onComplete={handleLoadingDone} />
+        </div>
       </div>
     );
   }

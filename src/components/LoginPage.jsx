@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { USERS } from '../config/auth.js';
+import SiteFooter from './SiteFooter.jsx';
 
 export default function LoginPage({ onLogin }) {
   const [email, setEmail] = useState('');
@@ -30,9 +31,9 @@ export default function LoginPage({ onLogin }) {
   };
 
   return (
-    <div className="min-h-screen bg-page-bg flex flex-col">
-      <header className="bg-dark-navy text-white shadow-sm">
-        <div className="mx-auto flex max-w-5xl items-center px-4 py-4">
+    <div className="flex min-h-screen w-full min-w-0 flex-col bg-page-bg">
+      <header className="w-full min-w-0 bg-dark-navy text-white shadow-sm">
+        <div className="mx-auto flex w-full min-w-0 max-w-5xl items-center px-4 py-4">
           <div className="flex items-center gap-2">
             <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 text-xs font-bold">
               SW
@@ -49,7 +50,7 @@ export default function LoginPage({ onLogin }) {
         </div>
       </header>
 
-      <main className="flex flex-1 items-center justify-center px-4 py-12">
+      <main className="flex min-w-0 w-full flex-1 items-center justify-center px-4 py-12">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -129,6 +130,8 @@ export default function LoginPage({ onLogin }) {
           </div>
         </motion.div>
       </main>
+
+      <SiteFooter />
     </div>
   );
 }

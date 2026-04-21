@@ -4,6 +4,7 @@ import {
   filterByMinMentions,
   pickRandomWinners,
 } from '../../utils/commentParser.js';
+import { maxAttendees } from '../../config/config.js';
 
 const STORAGE_KEYS = {
   winners: 'igCommentPicker_winners',
@@ -14,13 +15,18 @@ export default function StepFindAttendance({
   comments,
   setWinners,
   setCurrentStep,
+  giveawayPostDetails,
 }) {
-  const [minMentions, setMinMentions] = useState(1);
+  const loadedCommentsCount = comments?.length || 0;
+  const attendanceDisplayCount =
+    giveawayPostDetails?.commentsCount ?? loadedCommentsCount;
+
+  const [minMentions, setMinMentions] = useState(0);
   const [numWinners, setNumWinners] = useState(
-    Math.min(3, Math.max(1, comments?.length || 1))
+    Math.min(3, Math.max(1, loadedCommentsCount || 1), maxAttendees)
   );
 
-  const totalComments = comments?.length || 0;
+  const totalComments = loadedCommentsCount;
 
   const handleDetermine = () => {
     const filtered = filterByMinMentions(comments, Number(minMentions) || 0);
@@ -69,14 +75,16 @@ export default function StepFindAttendance({
               <p className="text-xs font-medium uppercase tracking-wide text-text-secondary">
                 Number of People Attending the Sweepstakes
               </p>
-              <p className="mt-1 text-2xl font-bold text-text-primary">
-                {totalComments}
+              <p className="mt-1 text-2xl font-bold text-text-primary tabular-nums">
+                {attendanceDisplayCount.toLocaleString()}
               </p>
             </div>
           </div>
-          <span className="mt-4 inline-flex rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-            Comments loaded
-          </span>
+          {/* <span className="mt-4 inline-flex rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+            {giveawayPostDetails?.commentsCount != null
+              ? `${loadedCommentsCount.toLocaleString()} loaded for winner draw`
+              : 'Comments loaded'}
+          </span> */}
         </motion.div>
       </div>
 
@@ -101,21 +109,22 @@ export default function StepFindAttendance({
           <input
             type="number"
             min={1}
-            max={Math.max(1, totalComments)}
+            max={Math.min(Math.max(1, totalComments), maxAttendees)}
             value={numWinners}
             onChange={(e) =>
               setNumWinners(
                 Math.min(
                   Math.max(1, Number(e.target.value) || 1),
-                  Math.max(1, totalComments)
+                  Math.max(1, totalComments),
+                  maxAttendees
                 )
               )
             }
             className="mt-1 w-full rounded-xl border border-border-grey px-3 py-2 text-sm outline-none ring-primary/30 transition-shadow duration-200 focus:ring-2 focus:shadow-sm"
           />
           <p className="mt-1 text-xs text-text-secondary">
-            You can pick up to {totalComments || 1} winners based on the
-            collected comments.
+            You can pick up to {Math.min(totalComments || 1, maxAttendees)} winners.{' '}
+            <span className="text-primary font-medium">Max allowed: {maxAttendees}</span>
           </p>
         </div>
 

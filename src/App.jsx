@@ -6,6 +6,7 @@ import StepScanPost from './components/steps/StepScanPost.jsx';
 import StepFindAttendance from './components/steps/StepFindAttendance.jsx';
 import StepDetermineWinner from './components/steps/StepDetermineWinner.jsx';
 import LoginPage from './components/LoginPage.jsx';
+import SiteFooter from './components/SiteFooter.jsx';
 import { postDetails } from './config/winners.js';
 
 const STORAGE_KEYS = {
@@ -194,9 +195,9 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-page-bg">
-      <header className="bg-dark-navy text-white shadow-sm">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
+    <div className="flex min-h-screen w-full min-w-0 flex-col bg-page-bg">
+      <header className="w-full min-w-0 bg-dark-navy text-white shadow-sm">
+        <div className="mx-auto flex w-full min-w-0 max-w-5xl items-center justify-between px-4 py-4">
           <div className="flex items-center gap-2">
             <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 text-xs font-bold">
               SW
@@ -237,10 +238,10 @@ export default function App() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-4 py-8">
+      <main className="mx-auto w-full min-w-0 max-w-5xl flex-1 overflow-x-hidden px-4 py-8">
         <StepIndicator currentStep={currentStep} />
 
-        <div className="mt-6">
+        <div className="mt-6 min-w-0">
           <AnimatePresence mode="wait">
             <motion.div
               key={stepKey}
@@ -255,6 +256,8 @@ export default function App() {
           </AnimatePresence>
         </div>
       </main>
+
+      <SiteFooter />
     </div>
   );
 }

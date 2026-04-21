@@ -48,18 +48,20 @@ function StepCircle({ index, currentStep }) {
 
 export default function StepIndicator({ currentStep }) {
   return (
-    <div className="rounded-2xl bg-card-white p-4 shadow-sm">
-      <div className="flex items-center justify-between gap-4">
+    <div className="min-w-0 rounded-2xl bg-card-white p-4 shadow-sm">
+      <div className="flex min-w-0 items-center justify-between gap-2 sm:gap-4">
         {steps.map((label, idx) => {
           const isLast = idx === steps.length - 1;
           const isCompleted = currentStep > idx + 1;
 
           return (
-            <div className="flex flex-1 items-center" key={label}>
-              <div className="flex items-center gap-3">
-                <StepCircle index={idx} currentStep={currentStep} />
+            <div className="flex min-w-0 flex-1 items-center" key={label}>
+              <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+                <div className="shrink-0">
+                  <StepCircle index={idx} currentStep={currentStep} />
+                </div>
                 <div
-                  className={`text-sm font-medium transition-colors duration-300 ${
+                  className={`min-w-0 break-words text-xs font-medium transition-colors duration-300 sm:text-sm ${
                     currentStep === idx + 1
                       ? 'text-text-primary'
                       : 'text-text-secondary'
@@ -69,7 +71,7 @@ export default function StepIndicator({ currentStep }) {
                 </div>
               </div>
               {!isLast && (
-                <div className="mx-3 h-[2px] flex-1 overflow-hidden rounded-full bg-gray-200">
+                <div className="mx-1.5 h-[2px] min-w-[6px] flex-1 overflow-hidden rounded-full bg-gray-200 sm:mx-3">
                   <div
                     className="h-full rounded-full bg-primary transition-all duration-500 ease-out"
                     style={{ width: isCompleted ? '100%' : '0%' }}
