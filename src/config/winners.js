@@ -1,6 +1,7 @@
 import ebyAvatar from '../assets/dps/eby_insta_dp.jpg';
 import heejazAvatar from '../assets/dps/heejaz_insta_dp.jpg';
 import shahanAvatar from '../assets/dps/shahan_shajahan_insta_dp.jpg';
+import rizwanAvatar from '../assets/dps/rizwan_mk_tvm_dp.jpg';
 export const postDetails = {
   title: 'Win a free t-shirt!',
   description: 'iPhone 17 Pro Max Just ❤️ comment ഇട്ട് വേഗം സ്വന്തമാകാം ലോകത്തുള്ള എല്ലാർക്കും പങ്കെടുകാം Maximam Share Must Follow 👇@pirishathinte_changayi_ @quzocartqatar @qc_qatar.',
@@ -16,12 +17,19 @@ export const postDetails = {
 };  
 export const WINNERS = [
   {
-    username: 'Shahan Shajahan',
-    userId: 'shahan_shajahan',
-    comment: '❤️',
+    username: 'Rizwan MK Tvm',
+    userId: 'rizwan_mk_tvm',
+    comment: '❤️❤️',
     rank: 2,
-    avatarUrl: shahanAvatar,
+    avatarUrl: rizwanAvatar,
   },
+  // {
+  //   username: 'Shahan Shajahan',
+  //   userId: 'shahan_shajahan',
+  //   comment: '❤️',
+  //   rank: 2,
+  //   avatarUrl: shahanAvatar,
+  // },
   {
     username: 'eby',
     userId: 'eby_n_jo',
