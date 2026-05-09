@@ -20,7 +20,7 @@ export const WINNERS = [
     username: 'Rizwan MK Tvm',
     userId: 'rizwan_mk_tvm',
     comment: '❤️❤️',
-    rank: 2,
+    rank: 1,
     avatarUrl: rizwanAvatar,
   },
   // {
@@ -34,7 +34,7 @@ export const WINNERS = [
     username: 'eby',
     userId: 'eby_n_jo',
     comment: '❤️',
-    rank: 1,
+    rank: 2,
     avatarUrl: ebyAvatar,
   },
   // {

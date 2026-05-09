@@ -205,11 +205,11 @@ export default function App() {
               alt="Wask"
               className="h-9 w-auto max-w-[min(136px,42vw)] shrink-0 object-contain object-left"
             />
-            <div className="min-w-0">
+            {/* <div className="min-w-0">
               <div className="text-xs text-gray-300">
                 Instagram Comment Picker
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="flex items-center gap-3">
