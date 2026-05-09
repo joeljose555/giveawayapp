@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { USERS } from '../config/auth.js';
+import waskLogo from '../assets/wask-logo.svg';
 import SiteFooter from './SiteFooter.jsx';
 
 export default function LoginPage({ onLogin }) {
@@ -34,14 +35,13 @@ export default function LoginPage({ onLogin }) {
     <div className="flex min-h-screen w-full min-w-0 flex-col bg-page-bg">
       <header className="w-full min-w-0 bg-dark-navy text-white shadow-sm">
         <div className="mx-auto flex w-full min-w-0 max-w-5xl items-center px-4 py-4">
-          <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 text-xs font-bold">
-              SW
-            </div>
-            <div>
-              <div className="text-sm font-semibold uppercase tracking-wide text-primary">
-                SwiftWin
-              </div>
+          <div className="flex min-w-0 items-center gap-3">
+            <img
+              src={waskLogo}
+              alt="Wask"
+              className="h-9 w-auto max-w-[min(136px,42vw)] shrink-0 object-contain object-left"
+            />
+            <div className="min-w-0">
               <div className="text-xs text-gray-300">
                 Instagram Comment Picker
               </div>
@@ -59,14 +59,17 @@ export default function LoginPage({ onLogin }) {
         >
           <div className="rounded-2xl bg-card-white p-8 shadow-sm">
             <div className="mb-6 text-center">
-              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 text-sm font-bold text-white">
-                SW
-              </div>
+              <img
+                src={waskLogo}
+                alt=""
+                aria-hidden
+                className="mx-auto mb-3 h-10 w-auto max-w-[200px] object-contain"
+              />
               <h1 className="text-xl font-bold text-text-primary">
                 Welcome back
               </h1>
               <p className="mt-1 text-sm text-text-secondary">
-                Sign in to access SwiftWin
+                Sign in to access Wask
               </p>
             </div>
 

@@ -70,11 +70,10 @@ export default function StepScanPost({
           <div className="h-9 w-9 rounded-xl border-4 border-white" />
         </div>
         <h1 className="text-xl font-bold text-text-primary sm:text-2xl">
-          SwiftWin
+          Free Instagram Comment Picker and Giveaways Tool
         </h1>
         <p className="mt-2 max-w-2xl text-sm text-text-secondary">
-          Paste the URL of your public Instagram giveaway post to collect
-          comments and randomly pick fair winners.
+          You can start the sweepstakes by copying the url of the instagram giveaway post below
         </p>
       </div>
 
@@ -86,7 +85,7 @@ export default function StepScanPost({
           type="url"
           value={postUrl}
           onChange={(e) => setPostUrl(e.target.value)}
-          placeholder="https://www.instagram.com/p/..."
+          placeholder="Enter Your Instagram Giveaway Post Url"
           className="flex-1 rounded-full border border-border-grey px-4 py-3 text-sm outline-none ring-primary/30 transition-shadow duration-200 focus:ring-2 focus:shadow-sm"
           required
         />
@@ -98,29 +97,22 @@ export default function StepScanPost({
           {isLoading && (
             <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
           )}
-          <span className="mr-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z"
-              />
-            </svg>
-          </span>
-          <span>{isLoading ? 'Scanning\u2026' : 'Scan Post'}</span>
+          <span>{isLoading ? 'Scanning\u2026' : 'SCAN'}</span>
         </button>
       </form>
 
       {localError && (
         <p className="mt-3 text-xs text-error-red">{localError}</p>
       )}
+
+      <div className="mt-8 space-y-4 text-sm text-text-secondary">
+        <p>
+          You can make Instagram giveaways easily. By typing the link of your Instagram giveaway post, you can pull automatic comments and find the giveaway win automatically. Finding the Instagram raffle is completely free.
+        </p>
+        <p>
+          Instagram comment picker tool finds all the comments under the url you specify, automatically detects the giveaway win in the criteria you specify and shows you. You can take video recordings or show screenshots to your followers to determine the winner.
+        </p>
+      </div>
     </div>
   );
 }

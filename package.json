@@ -1,8 +1,8 @@
 {
-  "name": "swiftwin",
+  "name": "wask",
   "version": "1.0.0",
   "private": true,
-  "description": "SwiftWin — Instagram comment picker and giveaway tool",
+  "description": "Wask — Instagram comment picker and giveaway tool",
   "author": "joel jose",
   "scripts": {
     "dev": "vite",

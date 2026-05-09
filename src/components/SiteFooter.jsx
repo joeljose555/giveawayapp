@@ -15,7 +15,7 @@ function FooterLink({ children }) {
 const columns = [
   {
     title: 'About us',
-    links: ['About SwiftWin', 'Our team', 'Careers', 'Press'],
+    links: ['About Wask', 'Our team', 'Careers', 'Press'],
   },
   {
     title: 'Products',
@@ -52,7 +52,7 @@ export default function SiteFooter() {
           ))}
         </div>
         <p className="mt-10 border-t border-white/10 pt-6 text-center text-xs text-gray-500">
-          © {new Date().getFullYear()} SwiftWin. All rights reserved.
+          © {new Date().getFullYear()} Wask. All rights reserved.
         </p>
       </div>
     </footer>
