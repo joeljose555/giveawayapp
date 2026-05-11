@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import instagramLogo from '../../assets/instagramlogo.jpg';
 import { DUMMY_COMMENTS, LOAD_DELAY_MS } from '../../data/dummyComments.js';
 import { WINNERS } from '../../config/winners.js';
 
@@ -66,9 +67,13 @@ export default function StepScanPost({
   return (
     <div className="mb-[200px] mt-[100px] rounded-2xl bg-card-white p-6 shadow-sm">
       <div className="flex flex-col items-center text-center">
-        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500">
-          <div className="h-9 w-9 rounded-xl border-4 border-white" />
-        </div>
+        <img
+          src={instagramLogo}
+          alt="Instagram"
+          width={64}
+          height={64}
+          className="mb-4 h-16 w-16 rounded-2xl object-cover"
+        />
         <h1 className="text-xl font-bold text-text-primary sm:text-2xl">
           Free Instagram Comment Picker and Giveaways Tool
         </h1>
